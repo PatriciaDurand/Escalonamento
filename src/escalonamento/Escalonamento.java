@@ -12,11 +12,19 @@ public class Escalonamento {
         Arquivo a = new Arquivo();
         a.leArquivo("arquivo.txt");
 
-        ArrayList<String> dados = a.pegaDadosDoArquivo();
+        ArrayList<String> dadosDoArquivo = a.pegaDadosDoArquivo();
 
-        for (int i = 0; i < dados.size(); i++) {
-            System.out.println(dados.get(i));
-        }
+        //manipula os dados para passar para o gerenciador de processos
+        int quantidadeProcessos = Integer.parseInt(dadosDoArquivo.get(0));
+        int tamanhoDaFatiaDeTempo = Integer.parseInt(dadosDoArquivo.get(1));
+        
+        //passa os dados manipulados para o gerenciador de processos
+        GerenciadorDeProcessos gerenciadorDeProcessos;
+        gerenciadorDeProcessos = new GerenciadorDeProcessos(quantidadeProcessos, tamanhoDaFatiaDeTempo, dadosDoArquivo);
+        gerenciadorDeProcessos.adicionaProcessos();
+       
+        
+        
     }
 
 }
