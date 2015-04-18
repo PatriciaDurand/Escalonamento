@@ -22,6 +22,10 @@ public class Escalonamento {
         GerenciadorDeProcessos gerenciadorDeProcessos;
         gerenciadorDeProcessos = new GerenciadorDeProcessos(quantidadeProcessos, tamanhoDaFatiaDeTempo, dadosDoArquivo);
         gerenciadorDeProcessos.adicionaProcessos();
+        
+        ArrayList<Processo> listaDeProcessos = gerenciadorDeProcessos.getListaDeProcessos();
+        
+        SJF sjf = new SJF(listaDeProcessos);
        
         
         

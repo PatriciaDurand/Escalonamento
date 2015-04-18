@@ -47,17 +47,28 @@ public class SJF {
     }
 
     private void atualizaFila() {
+        for (int i = 0; i < listaParaOrdenar.size(); i++) {
+            int tempoDeExecucaoDoProcessoParaOrdenar = listaParaOrdenar.get(i).getTempoDeExecucao();
+            int localParaInserirOProcesso = 0;
+            int j = localParaInserirOProcesso;
+
+            if (!listaDeProcessos.isEmpty()) {
+                while (tempoDeExecucaoDoProcessoParaOrdenar > listaDeProcessos.get(j).getTempoDeExecucao()) {
+                    localParaInserirOProcesso++;
+                    j++;
+                }
+            }
+            listaDeProcessos.add(localParaInserirOProcesso, listaParaOrdenar.get(i));
+        }
     }
 
     private boolean temProcessoNaFila() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
-    private void executaProcesso() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void executaProcesso() {        
     }
 
     private void atualizaContador() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
