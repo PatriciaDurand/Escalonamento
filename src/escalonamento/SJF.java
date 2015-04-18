@@ -10,6 +10,7 @@ public class SJF {
 
     private ArrayList<Processo> listaDeProcessos;
     private ArrayList<Processo> listaParaOrdenar;
+    private ArrayList<Processo> listaDeProcessosParaExecutar;
     private ArrayList<String> graficoSaida;
     int tempo = 0;
     int tempoVerificacaoChegada = 0;
@@ -17,6 +18,7 @@ public class SJF {
     public SJF(ArrayList<Processo> listaDeProcessos) {
         this.listaDeProcessos = listaDeProcessos;
         listaParaOrdenar = new ArrayList<Processo>();
+        listaDeProcessosParaExecutar = new ArrayList<Processo>();
         graficoSaida = new ArrayList<String>();
         executaEscalonamento();
     }
@@ -52,21 +54,24 @@ public class SJF {
             int localParaInserirOProcesso = 0;
             int j = localParaInserirOProcesso;
 
-            if (!listaDeProcessos.isEmpty()) {
-                while (tempoDeExecucaoDoProcessoParaOrdenar > listaDeProcessos.get(j).getTempoDeExecucao()) {
+            if (!listaDeProcessosParaExecutar.isEmpty()) {
+                while (tempoDeExecucaoDoProcessoParaOrdenar > listaDeProcessosParaExecutar.get(j).getTempoDeExecucao()) {
                     localParaInserirOProcesso++;
                     j++;
                 }
             }
-            listaDeProcessos.add(localParaInserirOProcesso, listaParaOrdenar.get(i));
+            listaDeProcessosParaExecutar.add(localParaInserirOProcesso, listaParaOrdenar.get(i));
         }
     }
 
     private boolean temProcessoNaFila() {
+        if (listaDeProcessosParaExecutar.isEmpty()) {
+            return false;
+        }
         return true;
     }
 
-    private void executaProcesso() {        
+    private void executaProcesso() {
     }
 
     private void atualizaContador() {
