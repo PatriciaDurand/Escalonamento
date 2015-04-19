@@ -17,18 +17,22 @@ public class Escalonamento {
         //manipula os dados para passar para o gerenciador de processos
         int quantidadeProcessos = Integer.parseInt(dadosDoArquivo.get(0));
         int tamanhoDaFatiaDeTempo = Integer.parseInt(dadosDoArquivo.get(1));
-        
+
         //passa os dados manipulados para o gerenciador de processos
         GerenciadorDeProcessos gerenciadorDeProcessos;
         gerenciadorDeProcessos = new GerenciadorDeProcessos(quantidadeProcessos, tamanhoDaFatiaDeTempo, dadosDoArquivo);
         gerenciadorDeProcessos.adicionaProcessos();
-        
+
         ArrayList<Processo> listaDeProcessos = gerenciadorDeProcessos.getListaDeProcessos();
-        
+
         SJF sjf = new SJF(listaDeProcessos);
-       
-        
+
+        ArrayList<String> graficoDeSaida = sjf.getGraficoDeSaida();
+
+        for (int i = 0; i < graficoDeSaida.size(); i++) {
+            System.out.print(graficoDeSaida.get(i));
+        }
         
     }
-
+    
 }
