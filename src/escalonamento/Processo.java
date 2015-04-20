@@ -9,7 +9,7 @@ public class Processo {
     private int numeroDoProcesso;
     private int tempoDeChegada;
     private int tempoDeExecucao;
-    private int tempoExecutado;
+    private int tempoQueFaltaExecutar;
     private int prioridade;
 
     public Processo(int numeroDoProcesso, int tempoDeChegada, int tempoDeExecucao, int prioridade) {
@@ -17,15 +17,15 @@ public class Processo {
         this.tempoDeChegada = tempoDeChegada;
         this.tempoDeExecucao = tempoDeExecucao;
         this.prioridade = prioridade;
-        this.tempoExecutado = 0;
+        this.tempoQueFaltaExecutar = tempoDeExecucao;
     }
 
-    public int getTempoExecutado() {
-        return tempoExecutado;
+    public int getTempoQueFaltaExecutar() {
+        return tempoQueFaltaExecutar;
     }
 
-    public void setTempoExecutado(int tempoExecutado) {
-        this.tempoExecutado = tempoExecutado;
+    public void setTempoExecutado(int fatiaDeTempo) {
+        this.tempoQueFaltaExecutar -= fatiaDeTempo;
     }
 
     public int getTempoDeChegada() {
@@ -34,10 +34,6 @@ public class Processo {
 
     public int getTempoDeExecucao() {
         return tempoDeExecucao;
-    }
-
-    public void setTempoDeExecucao(int novoTempoDeExecucao) {
-        this.tempoDeExecucao = novoTempoDeExecucao;
     }
 
     public int getPrioridade() {
