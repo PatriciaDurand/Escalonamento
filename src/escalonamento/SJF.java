@@ -70,8 +70,14 @@ public class SJF {
 
             if (!listaDeProcessosParaExecutar.isEmpty()) {
                 for (int j = 0; j < listaDeProcessosParaExecutar.size(); j++) {
-                    if (tempoDeExecucaoDoProcessoParaOrdenar > listaDeProcessosParaExecutar.get(j).getTempoDeExecucao()) {
+                    if (tempoDeExecucaoDoProcessoParaOrdenar
+                            > listaDeProcessosParaExecutar.get(j).getTempoDeExecucao()) {
                         localParaInserirOProcesso++;
+                    }
+                    if (tempoDeExecucaoDoProcessoParaOrdenar == listaDeProcessosParaExecutar.get(j).getTempoDeExecucao()) {
+                        if (listaParaOrdenar.get(i).getPrioridade() > listaDeProcessosParaExecutar.get(j).getPrioridade()) {
+                            localParaInserirOProcesso++;
+                        }
                     }
                 }
             }

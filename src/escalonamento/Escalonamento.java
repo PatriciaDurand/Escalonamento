@@ -25,32 +25,52 @@ public class Escalonamento {
 
         ArrayList<Processo> listaDeProcessos = gerenciadorDeProcessos.getListaDeProcessos();
 
+        //Execução do SJF
         SJF sjf = new SJF(listaDeProcessos);
 
-        ArrayList<String> graficoDeSaida = sjf.getGraficoDeSaida();
+        ArrayList<String> graficoDeSaidaSJF = sjf.getGraficoDeSaida();
+        double acumuladorTempoDeEspera;
+        double acumuladorTempoDeResposta;
+        double acumuladorTempoDeTurnaround;
 
         System.out.println("Gráfico de saída: SJF");
-        for (int i = 0; i < graficoDeSaida.size(); i++) {
-            System.out.print(graficoDeSaida.get(i));
+        for (int i = 0; i < graficoDeSaidaSJF.size(); i++) {
+            System.out.print(graficoDeSaidaSJF.get(i));
         }
 
         System.out.println("");
-        
-        Calculadora calculadora = new Calculadora(listaDeProcessos, graficoDeSaida);
+
+        acumuladorTempoDeEspera = 0;
+        acumuladorTempoDeResposta = 0;
+        acumuladorTempoDeTurnaround = 0;
+
+        Calculadora calculadoraSJF = new Calculadora(listaDeProcessos, graficoDeSaidaSJF);
         for (int i = 0; i < listaDeProcessos.size(); i++) {
             System.out.println("Calculo para o processo " + listaDeProcessos.get(i).getNumeroDoProcesso());
-            calculadora.calculaTemposDoProcesso(listaDeProcessos.get(i));
+            calculadoraSJF.calculaTemposDoProcesso(listaDeProcessos.get(i));
 
             System.out.print("Tempo de Espera: ");
-            System.out.println(calculadora.getTempoDeEspera());
+            System.out.println(calculadoraSJF.getTempoDeEspera());
+            acumuladorTempoDeEspera += calculadoraSJF.getTempoDeEspera();
 
             System.out.print("Tempo de Resposta: ");
-            System.out.println(calculadora.getTempoDeResposta());
+            System.out.println(calculadoraSJF.getTempoDeResposta());
+            acumuladorTempoDeResposta += calculadoraSJF.getTempoDeResposta();
 
             System.out.print("Tempo de Turnaround: ");
-            System.out.println(calculadora.getTempoDeTurnaround());
+            System.out.println(calculadoraSJF.getTempoDeTurnaround());
+            acumuladorTempoDeTurnaround += calculadoraSJF.getTempoDeTurnaround();
             System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-");
         }
+
+        System.out.print("Tempo médio de Espera: ");
+        System.out.println(acumuladorTempoDeEspera / quantidadeProcessos);
+
+        System.out.print("Tempo médio de Resposta: ");
+        System.out.println(acumuladorTempoDeResposta / quantidadeProcessos);
+
+        System.out.print("Tempo médio de Turnaroud: ");
+        System.out.println(acumuladorTempoDeTurnaround / quantidadeProcessos);
 
     }
 }
