@@ -7,13 +7,13 @@ import java.util.ArrayList;
  * @author Patricia Durand e Tamires Domingues
  */
 public class SJF {
-
+    
     private ArrayList<Processo> listaDeProcessosCopia;
     private ArrayList<Processo> listaParaOrdenar;
     private ArrayList<Processo> listaDeProcessosParaExecutar;
     private ArrayList<String> graficoSaida;
-    int tempo = 0;
-    int tempoVerificacaoChegada = 0;
+    private int tempo = 0;
+    private int tempoVerificacaoChegada = 0;
 
     public SJF(ArrayList<Processo> listaDeProcessos) {
         copiaListaDeProcessos(listaDeProcessos);
