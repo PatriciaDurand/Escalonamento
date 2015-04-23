@@ -26,6 +26,7 @@ public class Escalonamento {
         ArrayList<Processo> listaDeProcessos = gerenciadorDeProcessos.getListaDeProcessos();
 
         //Execução do SJF
+        gerenciadorDeProcessos.atualizaOTempoQueFaltaExecutar();
         SJF sjf = new SJF(listaDeProcessos);
 
         ArrayList<String> graficoDeSaidaSJF = sjf.getGraficoDeSaida();
@@ -73,11 +74,12 @@ public class Escalonamento {
         System.out.println(acumuladorTempoDeTurnaround / quantidadeProcessos);
 
         //Execução do Round Robin
+        gerenciadorDeProcessos.atualizaOTempoQueFaltaExecutar();
         RoundRobin roundrobin = new RoundRobin(listaDeProcessos, tamanhoDaFatiaDeTempo);
 
         ArrayList<String> graficoDeSaidaRoundRobin = roundrobin.getGraficoDeSaida();
 
-        System.out.println("Gráfico de saída: SJF");
+        System.out.println("Gráfico de saída: RoundRobin");
         for (int i = 0; i < graficoDeSaidaRoundRobin.size(); i++) {
             System.out.print(graficoDeSaidaRoundRobin.get(i));
         }
@@ -104,6 +106,51 @@ public class Escalonamento {
             System.out.print("Tempo de Turnaround: ");
             System.out.println(calculadoraRoundRobin.getTempoDeTurnaround());
             acumuladorTempoDeTurnaround += calculadoraRoundRobin.getTempoDeTurnaround();
+            System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-");
+        }
+
+        System.out.print("Tempo médio de Espera: ");
+        System.out.println(acumuladorTempoDeEspera / quantidadeProcessos);
+
+        System.out.print("Tempo médio de Resposta: ");
+        System.out.println(acumuladorTempoDeResposta / quantidadeProcessos);
+
+        System.out.print("Tempo médio de Turnaroud: ");
+        System.out.println(acumuladorTempoDeTurnaround / quantidadeProcessos);
+
+        //Execução do Round Robin com preempção
+        gerenciadorDeProcessos.atualizaOTempoQueFaltaExecutar();
+        RoundRobinComPreempcao roundRobinComPreempcao = new RoundRobinComPreempcao(listaDeProcessos, tamanhoDaFatiaDeTempo);
+
+        ArrayList<String> graficoDeSaidaRoundRobinComPreempcao = roundRobinComPreempcao.getGraficoDeSaida();
+
+        System.out.println("Gráfico de saída: RoundRobin com Preempção");
+        for (int i = 0; i < graficoDeSaidaRoundRobinComPreempcao.size(); i++) {
+            System.out.print(graficoDeSaidaRoundRobinComPreempcao.get(i));
+        }
+
+        System.out.println("");
+
+        acumuladorTempoDeEspera = 0;
+        acumuladorTempoDeResposta = 0;
+        acumuladorTempoDeTurnaround = 0;
+
+        Calculadora calculadoraRoundRobinComPreempcao = new Calculadora(listaDeProcessos, graficoDeSaidaRoundRobinComPreempcao);
+        for (int i = 0; i < listaDeProcessos.size(); i++) {
+            System.out.println("Calculo para o processo " + listaDeProcessos.get(i).getNumeroDoProcesso());
+            calculadoraRoundRobinComPreempcao.calculaTemposDoProcesso(listaDeProcessos.get(i));
+
+            System.out.print("Tempo de Espera: ");
+            System.out.println(calculadoraRoundRobinComPreempcao.getTempoDeEspera());
+            acumuladorTempoDeEspera += calculadoraRoundRobinComPreempcao.getTempoDeEspera();
+
+            System.out.print("Tempo de Resposta: ");
+            System.out.println(calculadoraRoundRobinComPreempcao.getTempoDeResposta());
+            acumuladorTempoDeResposta += calculadoraRoundRobinComPreempcao.getTempoDeResposta();
+
+            System.out.print("Tempo de Turnaround: ");
+            System.out.println(calculadoraRoundRobinComPreempcao.getTempoDeTurnaround());
+            acumuladorTempoDeTurnaround += calculadoraRoundRobinComPreempcao.getTempoDeTurnaround();
             System.out.println("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-");
         }
 

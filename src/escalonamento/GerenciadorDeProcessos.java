@@ -38,4 +38,10 @@ class GerenciadorDeProcessos {
         return listaDeProcessos;
     }
 
+    public void atualizaOTempoQueFaltaExecutar() {
+        for (int i = 0; i < listaDeProcessos.size(); i++) {
+            listaDeProcessos.get(i).atualizaTempoQueFaltaExecutar();
+        }
+    }
+
 }

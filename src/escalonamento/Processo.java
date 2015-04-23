@@ -17,7 +17,6 @@ public class Processo {
         this.tempoDeChegada = tempoDeChegada;
         this.tempoDeExecucao = tempoDeExecucao;
         this.prioridade = prioridade;
-        this.tempoQueFaltaExecutar = tempoDeExecucao;
     }
 
     public int getTempoQueFaltaExecutar() {
@@ -26,6 +25,10 @@ public class Processo {
 
     public void setTempoExecutado(int fatiaDeTempo) {
         this.tempoQueFaltaExecutar -= fatiaDeTempo;
+    }
+
+    public void atualizaTempoQueFaltaExecutar() {
+        tempoQueFaltaExecutar = tempoDeExecucao;
     }
 
     public int getTempoDeChegada() {
@@ -43,5 +46,5 @@ public class Processo {
     public int getNumeroDoProcesso() {
         return numeroDoProcesso;
     }
-    
+
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  *
  * @author Patricia Durand e Tamires Domingues
  */
-public class RoundRobin {
+public class RoundRobinComPreempcao {
 
     private ArrayList<Processo> listaDeProcessos;
     private ArrayList<Processo> listaDeProcessosCopia;
@@ -16,7 +16,7 @@ public class RoundRobin {
     private int tamanhoDaFatiaDeTempo;
     private int tempo = 0;
 
-    public RoundRobin(ArrayList<Processo> listaDeProcessos, int tamanhoDaFatiaDeTempo) {
+    public RoundRobinComPreempcao(ArrayList<Processo> listaDeProcessos, int tamanhoDaFatiaDeTempo) {
         copiaListaDeProcessos(listaDeProcessos);
         this.listaDeProcessos = listaDeProcessos;
         this.tamanhoDaFatiaDeTempo = tamanhoDaFatiaDeTempo;
@@ -88,6 +88,7 @@ public class RoundRobin {
     }
 
     private void executaProcesso() {
+        boolean proximoProcessoTemPrioridade = false;
         int tempoQueFaltaExecutar = listaDeProcessosParaExecutar.get(0).getTempoQueFaltaExecutar();
         int numeroDoProcesso = listaDeProcessosParaExecutar.get(0).getNumeroDoProcesso();
         int tempoExecutado = 0;
@@ -95,13 +96,27 @@ public class RoundRobin {
         if (tempoQueFaltaExecutar >= tamanhoDaFatiaDeTempo) {
             for (int i = 0; i < tamanhoDaFatiaDeTempo; i++) {
                 graficoSaida.add(String.valueOf(numeroDoProcesso));
+                atualizaTempo();
+                tempoExecutado += 1;
+                if (processoChegou()) {
+                    if (prioridadeEhMaior()) {
+                        proximoProcessoTemPrioridade = true;
+                        break;
+                    }
+                }
             }
-            tempoExecutado = tamanhoDaFatiaDeTempo;
         } else {
             for (int i = 0; i < tempoQueFaltaExecutar; i++) {
                 graficoSaida.add(String.valueOf(numeroDoProcesso));
+                atualizaTempo();
+                tempoExecutado += 1;
+                if (processoChegou()) {
+                    if (prioridadeEhMaior()) {
+                        proximoProcessoTemPrioridade = true;
+                        break;
+                    }
+                }
             }
-            tempoExecutado = tempoQueFaltaExecutar;
         }
         listaDeProcessosParaExecutar.get(0).setTempoExecutado(tempoExecutado);
 
@@ -121,4 +136,15 @@ public class RoundRobin {
     public ArrayList<String> getGraficoDeSaida() {
         return graficoSaida;
     }
+
+    private boolean prioridadeEhMaior() {
+        for (int i = 0; i < listaParaOrdenar.size(); i++) {
+            if (listaParaOrdenar.get(i).getPrioridade()
+                    < listaDeProcessosParaExecutar.get(0).getPrioridade()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
